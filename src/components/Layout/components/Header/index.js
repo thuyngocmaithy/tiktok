@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 
+import Button from '../../../Button';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
 import { Wrapper as PopperWrapper } from '../../../Popper';
@@ -49,7 +50,13 @@ function Header() {
                         </button>
                     </div>
                 </Tippy>
-                <div className={cx('actions')}></div>
+                <div className={cx('actions')}>
+                    <Button text>Upload</Button>
+                    <Button primary>Log in</Button>
+                    {/* <Button primary href="https://www.google.com.vn/" target="_blank">Log in</Button> */}
+                    {/* target="_blank" là mở href ở tab mới */}
+                    {/* prop target hoạt động khi truyền thêm ...passProps bên Button/index.js */}
+                </div>
             </div>
         </header>
     );
