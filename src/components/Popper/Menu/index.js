@@ -1,15 +1,37 @@
+import { useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
 import { Wrapper as PopperWrapper } from '../../Popper';
-import styles from './Menu.module.scss';
 import MenuItem from './MenuItem';
+import Header from './Header';
+import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items = [] }) {
+const defaultFn = () => {}
+
+function Menu({ children, items = [], onChange = defaultFn }) {
+
+    const [history, setHistory] = useState([{data: items}])
+    const current = history[history.length-1] //Phần tử cuối (children)
+
+
+
     const renderItems = () => {
-        return items.map((item, index) => <MenuItem key={index} data={item} />);
+        return current.data.map((item, index) => {             
+            const isParent = !!item.children //!! để convert về boolean
+            return <MenuItem key={index} data={item} onClick={() => {
+                if(isParent) //Nếu có children
+                {
+                    // Thêm item.children
+                    setHistory(prev => [...prev, item.children])
+                }
+                else {
+                    onChange(item)
+                }
+            }} /> 
+        });
     };
 
     return (
@@ -19,7 +41,13 @@ function Menu({ children, items = [] }) {
             // Khi ẩn bị delay 500ms
             render={(attrs) => (
                 <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper className={cx('menu-popper')}>{renderItems()}</PopperWrapper>
+                    <PopperWrapper className={cx('menu-popper')}>
+                        {history.length>1 && <Header title="Language" onBack={() => {
+                            //Xóa phần tử cuối (children)
+                            setHistory(prev => prev.slice(0,prev.length-1))
+                        }}/>}
+                        {renderItems()}
+                    </PopperWrapper>
                 </div>
             )}
         >

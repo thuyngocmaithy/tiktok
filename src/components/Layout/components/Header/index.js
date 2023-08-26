@@ -25,6 +25,19 @@ const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
         title: 'English',
+        children: {
+            title:'Language',
+            data: [
+                {
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                }
+            ]
+        }
     },
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
@@ -45,6 +58,12 @@ function Header() {
             setSearchResult([]); //[] rỗng để ẩn đi popper tìm kiếm
         }, 3000);
     }, []);
+
+    const handleMenuChange = (menuItem) => {
+        console.log(menuItem);
+
+    }
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -83,7 +102,7 @@ function Header() {
                     {/* target="_blank" là mở href ở tab mới */}
                     {/* prop target hoạt động khi truyền thêm ...passProps bên Button/index.js */}
 
-                    <Menu items={MENU_ITEMS}>
+                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                         <button className={cx('more-btn')}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
