@@ -7,7 +7,7 @@ import {
     faEarthAsia,
     faCircleQuestion,
     faKeyboard,
-    faCloudUpload,
+    faArrowUpFromBracket,
     faUser,
     faCoins,
     faGear,
@@ -25,6 +25,7 @@ import images from '../../../../assets/images';
 import { Wrapper as PopperWrapper } from '../../../Popper';
 import AccountItem from '../../../AccountItem';
 import Menu from '../../../Popper/Menu';
+import Image from '../../../Image';
 
 const cx = classNames.bind(styles);
 
@@ -133,7 +134,7 @@ function Header() {
                         <>
                             <Tippy delay={[0, 200]} content="Upload video" placement="bottom">
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <FontAwesomeIcon icon={faArrowUpFromBracket} />
                                 </button>
                             </Tippy>
                         </>
@@ -148,7 +149,7 @@ function Header() {
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
+                            <Image
                                 src="https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/4be145ab73bac1279a5588d11cebb885~c5_300x300.webp?x-expires=1693119600&x-signature=%2FcqzhR4axw7sXX3O4OYKCkAHUAA%3D"
                                 className={cx('user-avatar')}
                                 alt="Nguyen Van A"
