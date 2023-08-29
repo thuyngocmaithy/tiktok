@@ -37,7 +37,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     };
 
     return (
-        <Tippy
+        <Tippy            
             interactive
             delay={[0, 700]} //Khi show không bị delay
             // Khi ẩn bị delay 500ms'
@@ -56,7 +56,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                                 }}
                             />
                         )}
-                        {renderItems()}
+                        <div className={cx('menu-body')}>{renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}

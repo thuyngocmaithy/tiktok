@@ -13,6 +13,12 @@
     padding-bottom: 8px;
 }
 
+// Menu-body
+.menu-body {
+    overflow-y: auto;
+}
+
+
 //Menu item
 .menu-item {
     width: 100%;
@@ -20,9 +26,9 @@
     border-radius: 0;
     font-weight: 600;
     padding: 11px 16px;
-    line-height: 1.8rem;    
+    line-height: 1.8rem;
 
-    &.separate{
+    &.separate {
         border-top: 1px solid rgba(22, 24, 35, 0.12);
     }
 
@@ -34,8 +40,10 @@
 // Header menu
 .header {
     position: relative;
+    flex-shrink: 0; //không bị co lại theo chiều dọc
     height: 50px;
     margin-top: -8px;
+
 }
 
 .back-btn {
