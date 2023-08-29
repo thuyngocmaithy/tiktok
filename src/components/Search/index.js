@@ -29,6 +29,7 @@ function Search() {
             return;
         }
 
+        // 2. axios
         const fetchApi = async () => {
             setLoading(true); //loading trước khi gọi api
 
@@ -50,8 +51,6 @@ function Search() {
         //     .catch(() => {
         //         setLoading(false); //bỏ loading khi bị lỗi
         //     });
-
-        // 2. axios
     }, [debounced]); //Khi người dùng gõ vào input => chạy lại useEffect
 
     const handleClear = () => {
@@ -62,6 +61,15 @@ function Search() {
 
     const handleHideResult = () => {
         setShowResult(false);
+    };
+
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+
+        if (!searchValue.startsWith(' ')) {
+            // Không cho người dùng gõ dấu cách đầu tiên
+            setSearchValue(searchValue);
+        }
     };
 
     return (
@@ -88,7 +96,7 @@ function Search() {
                     value={searchValue}
                     placeholder="Search accounts and videos"
                     spellCheck={false}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={handleChange}
                     onFocus={() => setShowResult(true)}
                 />
                 {!!searchValue && !loading && (
@@ -99,7 +107,7 @@ function Search() {
 
                 {loading && <FontAwesomeIcon className={cx('loading-btn')} icon={faSpinner} />}
 
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault( )}>
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
             </div>

@@ -5,6 +5,9 @@
     --black: #000;
     --white: #fff;
     --text-color: #333;
+
+    --font-family: 'TikTokFont', sans-serif;
+
     //  Default layout
     --default-layout-header-height: 60px;
     --default-layout-width: 1150px;
@@ -22,7 +25,7 @@ html {
 }
 
 body {
-    font-family: 'TikTokFont', sans-serif;
+    font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
@@ -40,6 +43,7 @@ a[href] {
     color: var(--text-color);
     text-decoration: none;
 }
+
 // Fonts
 @font-face {
     font-family: TikTokFont;
@@ -58,6 +62,7 @@ a[href] {
     src: url('/assets/fonts/TikTokFont-Bold.woff2');
     font-weight: 700;
 }
+
 // Custom tippy
 body {
     .tippy-box {
@@ -72,8 +77,7 @@ body {
         color: rgba(84, 84, 84, 0.92);
     }
 
-    .tippy-content
-    {
+    .tippy-content {
         padding: 8px 9px;
     }
 
