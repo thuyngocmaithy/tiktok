@@ -3,9 +3,12 @@ import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-s
 import { useEffect, useState, useRef } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
+
+import * as searchServices from '../../apiServices/searchServices';
 import styles from './Search.module.scss';
 import { Wrapper as PopperWrapper } from '../Popper';
 import AccountItem from '../AccountItem';
+import { useDebounce } from '../../hooks';
 
 const cx = classNames.bind(styles);
 
@@ -15,28 +18,41 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    const debounced = useDebounce(searchValue, 500);
+
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debounced.trim()) {
             //trim() xóa khoảng trắng ở đầu và cuối
             setSearchResult([]);
             return;
         }
 
-        setLoading(true); //loading trước khi gọi api
+        const fetchApi = async () => {
+            setLoading(true); //loading trước khi gọi api
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-            //  encodeURIComponent(searchValue) dùng mã hóa ký tự đặc biệt thành hợp lệ trên URL
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
-                setLoading(false); //bỏ loading sau khi gọi api
-            })
-            .catch(() => {
-                setLoading(false); //bỏ loading khi bị lỗi
-            });
-    }, [searchValue]); //Khi người dùng gõ vào input => chạy lại useEffect
+            const result = await searchServices.search(debounced);
+            setSearchResult(result);
+
+            setLoading(false); //loading sau khi api gọi xong
+        };
+        fetchApi();
+
+        //1. fetch
+        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
+        //     //  encodeURIComponent(searchValue) dùng mã hóa ký tự đặc biệt thành hợp lệ trên URL
+        //     .then((res) => res.json())
+        //     .then((res) => {
+        //         setSearchResult(res.data);
+        //         setLoading(false); //bỏ loading sau khi gọi api
+        //     })
+        //     .catch(() => {
+        //         setLoading(false); //bỏ loading khi bị lỗi
+        //     });
+
+        // 2. axios
+    }, [debounced]); //Khi người dùng gõ vào input => chạy lại useEffect
 
     const handleClear = () => {
         setSearchValue('');
