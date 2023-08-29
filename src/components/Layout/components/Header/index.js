@@ -1,8 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faCircleXmark,
-    faSpinner,
-    faMagnifyingGlass,
     faEllipsisVertical,
     faEarthAsia,
     faCircleQuestion,
@@ -13,22 +10,20 @@ import {
     faGear,
     faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react';
-import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 
 import Button from '../../../Button';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
-import { Wrapper as PopperWrapper } from '../../../Popper';
-import AccountItem from '../../../AccountItem';
 import Menu from '../../../Popper/Menu';
 import Image from '../../../Image';
+import Search from '../../../Search';
 
 const cx = classNames.bind(styles);
 
+// MENU KHI CHƯA ĐĂNG NHẬP
 const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
@@ -59,20 +54,13 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-    const [searchResult, setSearchResult] = useState([]);
-
     const currentUser = true;
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]); //[] rỗng để ẩn đi popper tìm kiếm
-        }, 3000);
-    }, []);
 
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
     };
 
+    // MENU SAU KHI ĐĂNG NHẬP
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
@@ -101,34 +89,13 @@ function Header() {
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
+                {/* LOGO */}
                 <img src={images.logo} alt="Tiktok"></img>
-                <HeadlessTippy
-                    interactive //tippy được tương tác mà không ẩn đi
-                    visible={searchResult.length > 0} //Visible là Hiển thị không cần hover
-                    // Hiển thị khi kết quả tìm kiếm có length > 0
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input placeholder="Search accounts and videos" spellCheck={false} />
-                        <button className={cx('clear-btn')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading-btn')} icon={faSpinner} />
 
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
+                {/* THANH TÌM KIẾM */}
+                <Search />
+
+                {/* ACTIONS */}
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
