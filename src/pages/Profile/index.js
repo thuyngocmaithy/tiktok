@@ -1,5 +1,5 @@
-function Upload() {
-    return <h2>Upload page</h2>;
+function Profile() {
+    return <h2>Profile page</h2>;
 }
 
-export default Upload;
+export default Profile;
