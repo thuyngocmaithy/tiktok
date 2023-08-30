@@ -15,15 +15,15 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showResult, setShowResult] = useState(true);
+    const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const debounced = useDebounce(searchValue, 500);
+    const debouncedValue = useDebounce(searchValue, 500);
 
     const inputRef = useRef();
 
     useEffect(() => {
-        if (!debounced.trim()) {
+        if (!debouncedValue.trim()) {
             //trim() xóa khoảng trắng ở đầu và cuối
             setSearchResult([]);
             return;
@@ -33,7 +33,7 @@ function Search() {
         const fetchApi = async () => {
             setLoading(true); //loading trước khi gọi api
 
-            const result = await searchServices.search(debounced);
+            const result = await searchServices.search(debouncedValue);
             setSearchResult(result);
 
             setLoading(false); //loading sau khi api gọi xong
@@ -41,7 +41,7 @@ function Search() {
         fetchApi();
 
         //1. fetch
-        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
+        // fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
         //     //  encodeURIComponent(searchValue) dùng mã hóa ký tự đặc biệt thành hợp lệ trên URL
         //     .then((res) => res.json())
         //     .then((res) => {
@@ -51,7 +51,7 @@ function Search() {
         //     .catch(() => {
         //         setLoading(false); //bỏ loading khi bị lỗi
         //     });
-    }, [debounced]); //Khi người dùng gõ vào input => chạy lại useEffect
+    }, [debouncedValue]); //Khi người dùng gõ vào input => chạy lại useEffect
 
     const handleClear = () => {
         setSearchValue('');
