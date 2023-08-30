@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
@@ -37,7 +38,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     };
 
     return (
-        <Tippy            
+        <Tippy
             interactive
             delay={[0, 700]} //Khi show không bị delay
             // Khi ẩn bị delay 500ms'
@@ -49,7 +50,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                     <PopperWrapper className={cx('menu-popper')}>
                         {history.length > 1 && (
                             <Header
-                                title="Language"
+                                title={current.title}
                                 onBack={() => {
                                     //Xóa phần tử cuối (children)
                                     setHistory((prev) => prev.slice(0, prev.length - 1));
@@ -68,5 +69,12 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
         </Tippy>
     );
 }
+
+Menu.propTypes = {
+    children: PropTypes.node.isRequired,
+    items: PropTypes.array,
+    hideOnClick: PropTypes.bool,
+    onChange: PropTypes.func,
+};
 
 export default Menu;

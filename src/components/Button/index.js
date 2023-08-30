@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
@@ -9,13 +10,13 @@ function Button({
     href,
     primary = false,
     outline = false,
-    text= false,
-    rounded=false,
-    disabled=false,
+    text = false,
+    rounded = false,
+    disabled = false,
     small = false,
-    large = false,    
+    large = false,
     children,
-    className, //thêm prop className dùng để đặt className => custom riêng 
+    className, //thêm prop className dùng để đặt className => custom riêng
     leftIcon,
     rightIcon,
     onClick,
@@ -31,24 +32,22 @@ function Button({
     // (mặc định là medium khi không truyền prop)
     let Comp = 'button';
 
-    const props = {        
+    const props = {
         onClick,
         ...passProps,
     };
 
     // remove event listener when btn is disabled
-    if(disabled){
+    if (disabled) {
         // Cách 1 (chỉ xóa props onClick)
         // delete props.onClick
         // Cách 2
-        Object.keys(props).forEach(key =>{
-            if(key.startsWith('on') && typeof props[key] === 'function') 
-            //sự kiện bắt đầu bằng on và typeof là hàm => là lắng nghe sự kiện        
-        {
-            delete props[key]
-        }
-
-        })
+        Object.keys(props).forEach((key) => {
+            if (key.startsWith('on') && typeof props[key] === 'function') {
+                //sự kiện bắt đầu bằng on và typeof là hàm => là lắng nghe sự kiện
+                delete props[key];
+            }
+        });
     }
 
     if (to) {
@@ -60,7 +59,7 @@ function Button({
     }
 
     const classes = cx('wrapper', {
-        [className] :className, //khi có className sẽ lấy value của className
+        [className]: className, //khi có className sẽ lấy value của className
         primary,
         // Nếu có truyền primary vào button, primary sẽ được thêm vào className của <Comp>
         outline,
@@ -68,7 +67,7 @@ function Button({
         rounded,
         disabled,
         small,
-        large,            
+        large,
     });
 
     return (
@@ -80,5 +79,22 @@ function Button({
         </Comp>
     );
 }
+
+Button.propTypes = {
+    to: PropTypes.string,
+    href: PropTypes.string,
+    primary: PropTypes.bool,
+    outline: PropTypes.bool,
+    text: PropTypes.bool,
+    rounded: PropTypes.bool,
+    disabled: PropTypes.bool,
+    small: PropTypes.bool,
+    large: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string,
+    leftIcon: PropTypes.node,
+    rightIcon: PropTypes.node,
+    onClick: PropTypes.func,
+};
 
 export default Button;
